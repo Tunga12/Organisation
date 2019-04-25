@@ -1,0 +1,16 @@
+<div class="jumbtron">
+    <h1 class="display-4 text-center">Department Tree View</h1>
+    <hr>
+
+    <button nz-button (click)="onBack()">Back</button>
+
+    <nz-tree
+          [nzData]="nodes"
+          nzAsyncData
+          (nzClick)="nzEvent($event)"
+          (nzExpandChange)="nzEvent($event)">
+      </nz-tree>
+  
+</div>
+
+

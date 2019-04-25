@@ -1,0 +1,32 @@
+<button nz-button (click)="onNew()" > New Department</button>
+
+<button nz-button (click)="onTree()" > Tree View</button>
+<hr>
+
+<nz-table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Parent</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let department of service.list" >
+                <td (click)="onRowClicked(department)" style="cursor:pointer;">{{department.Name}}</td>
+                <td>{{department.Description}}</td>
+                <td *ngIf="department.ParentDepartment != null">{{department.ParentDepartment.Name }}</td>
+                <td *ngIf="department.ParentDepartment == null">None</td>
+
+                <td>
+                    <i nz-icon nzType="edit" nzTheme="twotone" style="cursor:pointer;" (click)="onEdit(department)"></i>
+                  <nz-divider nzType="vertical"></nz-divider>
+                  <i nz-icon nzType="delete" nzTheme="twotone" style="cursor:pointer;" [nzTwotoneColor]="'#eb2f96'" (click)="onDelete(department)"></i>
+                </td>
+        
+              </tr>
+              
+            </tbody>
+</nz-table>
+        

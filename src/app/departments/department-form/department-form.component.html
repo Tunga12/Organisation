@@ -1,0 +1,28 @@
+<div nz-row>
+  <div nz-col nzSpan="12" nzOffset="6">
+<form (ngSubmit)="onSubmit()" #f="ngForm" nz-form>
+  <nz-form-item>
+    <nz-form-label nzFor="name">Name</nz-form-label>
+      <nz-form-control>
+        <input nz-input id="name" ngModel name="name" required #name="ngModel">
+        <nz-form-explain *ngIf="name.invalid && name.touched">Name is required</nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="desc">Description</nz-form-label>
+    <textarea class="form-control" rows="5" id="desc" ngModel name="description" required> </textarea>
+    <nz-form-explain *ngIf="name.invalid && name.touched">Description is required</nz-form-explain>
+  </nz-form-item>
+  <nz-form-item>
+      <nz-form-label nzFor="sel1">Select parent</nz-form-label>
+      <nz-form-control>
+      <nz-select id="sel1" ngModel name="parent" required>
+        <nz-option *ngFor="let department of possibleParents" [nzValue]="department" [nzLabel]="department.Name"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <button type="submit" nz-button [disabled]="!form.valid">Submit</button>
+</form>
+
+</div>
+</div>
