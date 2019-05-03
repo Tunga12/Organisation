@@ -1,3 +1,21 @@
-<div class="container">
-  <router-outlet></router-outlet>
-</div>
+<nz-layout class="layout">
+  <nz-header>
+    <div class="logo">
+      <img src="assets/images/myLogo.png" alt="logo" style="height: 31px">
+    </div>
+    <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'" style="line-height: 64px;">
+      <li nz-menu-item [routerLink]="['/organisations']" >Home</li>
+    </ul>
+  </nz-header>
+  <nz-content style="padding:0 50px;">
+    <nz-breadcrumb style="margin:16px 0;" [nzAutoGenerate]="true">
+      <!-- <nz-breadcrumb-item>Home</nz-breadcrumb-item>
+      <nz-breadcrumb-item>List</nz-breadcrumb-item>
+      <nz-breadcrumb-item>App</nz-breadcrumb-item> -->
+    </nz-breadcrumb>
+    <div style="background:#fff; padding: 24px; min-height: 600px;">
+      <router-outlet></router-outlet>
+    </div>
+  </nz-content>
+  <nz-footer style="text-align: center;">Org Manager ©2019 Implemented By Tunga</nz-footer>
+</nz-layout>
