@@ -3,6 +3,7 @@ import { DepartmentService } from 'src/app/departments/shared/department.service
 import { Department } from 'src/app/departments/shared/department.model';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-department-list',
@@ -11,72 +12,84 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class DepartmentListComponent implements OnInit {
 
-  @Input() root: Department;
-
   departments: Department[];
- 
+  subscription: Subscription;
+
+
   constructor(private service: DepartmentService,
     private router: Router,
     private toastr: ToastrService) { }
 
   ngOnInit() {
-    this.service.refreshList();
+    this.subscription = this.service.departmentsChanged.subscribe(
+      list => {
+        this.departments = this.service.refreshList();
+        console.log(this.departments);
+      }
+    )
+
+    this.departments = this.service.refreshList();
+    // this.service.filteredlist = [];
+
   }
 
-  onRowClicked(department: Department){
+  onRowClicked(department: Department) {
     this.router.navigate(['/departments', department.DId]);
   }
 
-  onEdit(department: Department){
+  onEdit(department: Department) {
     this.router.navigate(['/departments', department.DId, 'edit']);
   }
 
-  onDelete(department: Department){
+  onDelete(department: Department) {
 
-    if (confirm('Are you sure to delete this record ?')){
+    if (confirm('Are you sure to delete this record ?')) {
 
-    this.service.getDepartment(department.DId).subscribe(
-      res => {
-        res.Children = this.service.addChildren(res);
-        this.service.children = [];
+      var res = this.service.getDepartment(department.DId);
 
-        if(res.Children){
-          res.Children.forEach(element => {
-            this.service.deleteDepartment(element.DId).subscribe(
-              res => {
-                console.log(res);
-                this.service.refreshList();
-                this.toastr.warning(element.Name + 'Deleted successfully', 'Department Register');
-              }
-            )
-          });
-        }
-       
-      },
-      error => {
-        this.toastr.error(error.message, 'Department Register');
+      res.Children = this.service.addChildren(res);
+      this.service.children = [];
+
+      if (res.Children) {
+        res.Children.forEach(element => {
+          this.service.deleteDepartment(element.DId);
+
+          // this.service.refreshList();
+          // this.service.filteredlist = [];
+          this.toastr.warning(element.Name + 'Deleted successfully', 'Department Register');
+
+        });
       }
-    )
 
-    this.service.deleteDepartment(department.DId).subscribe(
-      res => {
-        console.log(res);
-        this.service.refreshList();
+      if (department.ParentDepartmentID != null) {
+        this.service.deleteDepartment(department.DId);
+        // this.service.refreshList();
+
         this.toastr.warning(department.Name + ' deleted successfully', 'Department Register');
+
+      } else {
+        // this.service.refreshList();
+        // this.service.filteredlist = [];
+        this.toastr.warning("To delete the CEO, you must delete the organisation", 'Department Register')
       }
-    )
+
 
     }
- 
+
 
   }
-  onNew(){
+  onNew() {
     this.router.navigate(['/departments/new']);
   }
 
-  onTree(){
+  onTree() {
     this.router.navigate(['/departments/tree']);
   }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
 
 
 }

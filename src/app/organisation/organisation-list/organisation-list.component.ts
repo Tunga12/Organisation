@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Organisation } from '../shared/organisation.model';
 import { OrganisationService } from '../shared/organisation.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { DepartmentService } from 'src/app/departments/shared/department.service';
 
@@ -18,13 +18,13 @@ export class OrganisationListComponent implements OnInit {
     private depService: DepartmentService,
     private orgService: OrganisationService,
     private router: Router,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
   }
 
   onRowClicked(org: Organisation){
-    // this.router.navigate(['/organisations', org.OId]);
     // pass the org to the departments
     this.depService.root = org.root;
     this.router.navigate(['/departments']);
@@ -46,6 +46,8 @@ export class OrganisationListComponent implements OnInit {
 
   onNew(){
     this.router.navigate(['/organisations/new']);
+    // this.router.navigate(['new'], {relativeTo: this.route});
+
   }
 
 }

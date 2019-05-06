@@ -12,12 +12,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class DepartmentTreeComponent implements OnInit {
 
-  // nodes = [
-  //   { title: 'Expand to load', key: '0' },
-  //   { title: 'Expand to load', key: '1' },
-  //   { title: 'Tree Node', key: '2', isLeaf: true }
-  // ];
-
     nodes: NzTreeNodeOptions[] = [];
  
 
@@ -30,11 +24,13 @@ export class DepartmentTreeComponent implements OnInit {
   }
 
   filter(){
-    this.service.list.forEach(element => {
+    this.service.refreshList().forEach(element => {
       if(element.ParentDepartmentID == null){
         this.nodes.push({ title: element.Name, key: <string><any>element.DId})
       }
     });
+
+    // this.service.filteredlist = [];
   }
 
   onBack(){
@@ -56,8 +52,9 @@ export class DepartmentTreeComponent implements OnInit {
 
   loadNode(key): Promise<NzTreeNodeOptions[]> {
     return new Promise(resolve => {
-      this.service.getDepartment(+key).subscribe(
-        res => {
+      var res = this.service.getDepartment(+key)
+      // .subscribe(
+      //   res => {
           res = this.service.addChildrenForTree(res);
           var children = [];
           if(res.Children){
@@ -67,8 +64,8 @@ export class DepartmentTreeComponent implements OnInit {
           }
 
           resolve(children)
-        }
-      )
+      //   }
+      // )
     });
   }
 

@@ -23,9 +23,9 @@ export class DepartmentDetailComponent implements OnInit {
     this.route.params.subscribe(
       (params: Params) => {
         this.id = +params['id'];
-        this.service.getDepartment(this.id)
-        .subscribe(
-          res => {
+        var res = this.service.getDepartment(this.id)
+        // .subscribe(
+        //   res => {
 
             res.Children = [];
             for( var i = 0; i < this.service.list.length; i++ ){
@@ -38,10 +38,9 @@ export class DepartmentDetailComponent implements OnInit {
             this.department = res;
             console.log(this.department);
 
-          }
-        );
+        //   }
+        // );
         
-        // this.department = this.service.getDepartment11(this.id);
 
       }
     );
@@ -49,19 +48,10 @@ export class DepartmentDetailComponent implements OnInit {
   }
 
   onBack(){
-    // this.location.back();
     this.router.navigate(['../'], {relativeTo: this.route});
   }
 
 
-  // onEditRecipe(){
-  //   this.router.navigate(['edit'], {relativeTo: this.route});
-  // }
-
-  // onDeleteRecipe(){
-  //   this.recipeService.deleteRecipe(this.id);
-  //   this.router.navigate(['/recipes']);
-  // }
 
 
 

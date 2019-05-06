@@ -9,22 +9,23 @@
 
 
   <div nz-row>
+      <h5>Description: </h5> 
       <div nz-col nzSpan="12">
-        <h3>Description: </h3> {{department.Description}}
+       {{department.Description}}
       </div>
   </div>
 
   <div nz-row>
+      <h5>Managing Department: </h5>
     <div nz-col nzSpan="12">
-      <h3>Managing Department: </h3>
       <span *ngIf="department.ParentDepartment != null">{{department.ParentDepartment.Name}}</span>
       <span *ngIf="department.ParentDepartment == null">None</span>
     </div>
 </div>
 
 <div nz-row>
+    <h5>Departments under Management: </h5>
   <div nz-col nzSpan="12" >
-    <h3>Departments under Management: </h3>
     <div *ngFor="let child of department.Children">
     <span> {{ child.Name }} </span>
   </div>

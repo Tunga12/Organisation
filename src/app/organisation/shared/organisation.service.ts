@@ -20,7 +20,8 @@ export class OrganisationService {
     // return this.http.post(this.rootURL + '/Department', data);
   }
   putOrganisation(data: Organisation) {
-    this.list[data.OId] = data;
+    var foundIndex = this.list.findIndex(x => x.OId == data.OId);
+    this.list[foundIndex] = data;
     // return this.http.put(this.rootURL + '/Department/'+ data.OId, data);
   }
   deleteOrganisation(data) {
@@ -31,7 +32,8 @@ export class OrganisationService {
 
   getOrganisation(id){
     // return this.http.get<Organisation>(this.rootURL + '/Department/'+ id);
-    return this.list[id];
+    var foundIndex = this.list.findIndex(x => x.OId == id);
+    return this.list[foundIndex];
   }
 
   refreshList(){
@@ -50,4 +52,11 @@ export class OrganisationService {
   getNextId(){
     return this.id++;
   }
+
+  // getUniqueId(): string {
+  //     var id = Math.random().toString(36).substr(2, 16);
+  //     console.log(id);
+  //     return id;
+  // }
+  
 }

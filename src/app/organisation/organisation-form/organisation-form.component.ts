@@ -20,7 +20,7 @@ export class OrganisationFormComponent implements OnInit {
   editMode: boolean;
   org: Organisation;
 
-  
+
   constructor(
     private depService: DepartmentService,
     private orgService: OrganisationService,
@@ -35,84 +35,78 @@ export class OrganisationFormComponent implements OnInit {
         this.id = +params['id'];
         this.editMode = params['id'] != null;
         console.log("editMode: " + this.editMode);
-        if(this.editMode){
+        if (this.editMode) {
           this.org = this.orgService.getOrganisation(this.id);
           this.initForm();
-       
+
         }
-    }
+      }
     );
   }
 
   initForm(): any {
 
-    setTimeout( () => {
+    setTimeout(() => {
       this.form.setValue({
         name: this.org.Name,
         description: this.org.Description,
         rootName: this.org.root.Name,
         rootDescription: this.org.root.Description
-     })
+      })
     }, 1000)
 
   }
 
-  onSubmit(){
+  onSubmit() {
     console.log("Submitted.");
-  
 
-    if(!this.editMode){
 
-      let root : Department = new Department(
-        0,
+    if (!this.editMode) {
+      let root: Department = new Department(
+        this.depService.getNextId(),
         this.form.value.rootName,
         this.form.value.rootDescription,
         null
       )
-  
+
       let org: Organisation = new Organisation(
         this.orgService.getNextId(),
-        this.form.value.name, 
-        this.form.value.description, 
-        root, 
+        this.form.value.name,
+        this.form.value.description,
+        root,
       );
-  
-      console.log("department: ", JSON.stringify(org))
 
-      this.depService.postDepartment(root).subscribe(
-          res => {
-            console.log("post response" + JSON.stringify(res));
-            org.root = res as Department;
-            this.orgService.postOrganisation(org);
-            this.toastr.success("Organisation Added", "Organisation Register");
-          },
-          error => {
-            console.log(error);
-            this.toastr.error(error.message, "Organisation Register");
-          }
-      )
-      
-    }else{
+      console.log("organisation: ", JSON.stringify(org))
 
-      let root : Department = new Department(
+      var res = this.depService.postDepartment(root);
+
+      console.log("post response" + JSON.stringify(res));
+      org.root = res as Department;
+      this.orgService.postOrganisation(org);
+      this.toastr.success("Organisation Added", "Organisation Register");
+
+
+    } else {
+
+      let root: Department = new Department(
         this.org.root.DId,
         this.form.value.rootName,
         this.form.value.rootDescription,
         null
       )
-  
+
       let org: Organisation = new Organisation(
         this.id,
-        this.form.value.name, 
-        this.form.value.description, 
-        root, 
+        this.form.value.name,
+        this.form.value.description,
+        root,
       );
-  
+
 
       this.orgService.putOrganisation(org);
-      
+
     }
-    
+
     this.orgService.refreshList();
     this.router.navigate(["/organisations"]);
   }

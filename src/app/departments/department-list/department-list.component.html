@@ -12,8 +12,8 @@
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>
-              <tr *ngFor="let department of service.list" >
+            <tbody *ngIf="departments">
+              <tr *ngFor="let department of departments" >
                 <td (click)="onRowClicked(department)" style="cursor:pointer;">{{department.Name}}</td>
                 <td>{{department.Description}}</td>
                 <td *ngIf="department.ParentDepartment != null">{{department.ParentDepartment.Name }}</td>
