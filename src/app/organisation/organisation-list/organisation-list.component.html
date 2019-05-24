@@ -1,4 +1,4 @@
-<button nz-button (click)="onNew()" > New Organisation</button>
+<button nz-button (click)="onNew()" data-cy="newOrg"> New Organisation</button>
 
 <hr>
 
@@ -18,9 +18,9 @@
                 <td>{{org.root.Name }}</td>
 
                 <td>
-                    <i nz-icon nzType="edit" nzTheme="twotone" style="cursor:pointer;" (click)="onEdit(org)"></i>
+                    <i nz-icon nzType="edit" nzTheme="twotone" style="cursor:pointer;" (click)="onEdit(org)" data-cy="editOrg"></i>
                   <nz-divider nzType="vertical"></nz-divider>
-                  <i nz-icon nzType="delete" nzTheme="twotone" style="cursor:pointer;" [nzTwotoneColor]="'#eb2f96'" (click)="onDelete(org)"></i>
+                  <i nz-icon nzType="delete" nzTheme="twotone" style="cursor:pointer;" [nzTwotoneColor]="'#eb2f96'" (click)="onDelete(org)" data-cy="deleteOrg"></i>
                 </td>
         
               </tr>

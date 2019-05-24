@@ -53,7 +53,7 @@ export class OrganisationFormComponent implements OnInit {
         rootName: this.org.root.Name,
         rootDescription: this.org.root.Description
       })
-    }, 1000)
+    }, 200)
 
   }
 
@@ -104,6 +104,8 @@ export class OrganisationFormComponent implements OnInit {
 
 
       this.orgService.putOrganisation(org);
+      this.toastr.info("Organisation Edited", "Organisation Register");
+
 
     }
 

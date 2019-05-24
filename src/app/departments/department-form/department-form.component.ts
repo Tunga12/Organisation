@@ -84,7 +84,7 @@ export class DepartmentFormComponent implements OnInit {
         description: this.department.Description,
         parent: []
       })
-    }, 1000);
+    }, 200);
 
   }
 

@@ -1,6 +1,6 @@
-<button nz-button (click)="onNew()" > New Department</button>
+<button nz-button (click)="onNew()" data-cy="newDep"> New Department</button>
 
-<button nz-button (click)="onTree()" > Tree View</button>
+<button nz-button (click)="onTree()" data-cy="treeView"> Tree View</button>
 <hr>
 
 <nz-table>
@@ -20,9 +20,9 @@
                 <td *ngIf="department.ParentDepartment == null">None</td>
 
                 <td>
-                    <i nz-icon nzType="edit" nzTheme="twotone" style="cursor:pointer;" (click)="onEdit(department)"></i>
+                    <i nz-icon nzType="edit" nzTheme="twotone" style="cursor:pointer;" (click)="onEdit(department)" data-cy="editDep"></i>
                   <nz-divider nzType="vertical"></nz-divider>
-                  <i nz-icon nzType="delete" nzTheme="twotone" style="cursor:pointer;" [nzTwotoneColor]="'#eb2f96'" (click)="onDelete(department)"></i>
+                  <i nz-icon nzType="delete" nzTheme="twotone" style="cursor:pointer;" [nzTwotoneColor]="'#eb2f96'" (click)="onDelete(department)" data-cy="deleteDep"></i>
                 </td>
         
               </tr>

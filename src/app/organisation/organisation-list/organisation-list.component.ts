@@ -16,7 +16,7 @@ export class OrganisationListComponent implements OnInit {
  
   constructor(
     private depService: DepartmentService,
-    private orgService: OrganisationService,
+    public orgService: OrganisationService,
     private router: Router,
     private toastr: ToastrService,
     private route: ActivatedRoute) { }
