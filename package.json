@@ -5,6 +5,10 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "cy:run": "cypress run --spec \"cypress/integration/sample_spec.js\"",
+    "ci:start-server": "angular-http-server --path ./dist/Organisation -p 4200",
+    "ci:cy-run": "start-server-and-test ci:start-server http://localhost:4200 cy:run",
+    "cy:verify": "cypress verify",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -45,6 +49,7 @@
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.4.0",
+    "start-server-and-test": "^1.9.1",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "typescript": "~3.2.2"

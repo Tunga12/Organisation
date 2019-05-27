@@ -123,7 +123,7 @@ describe('Department', function () {
 
         // })
 
-        cy.get('tbody>tr').eq(1).get('.anticon-edit').eq(1).click()
+        cy.get('tbody>tr').eq(1).get('[data-cy=editDep]').eq(1).click()
 
         cy.url().should('include', '/departments')
             .and('include', '/edit')
