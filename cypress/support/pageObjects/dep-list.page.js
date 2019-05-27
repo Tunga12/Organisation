@@ -1,8 +1,8 @@
 class DepList {
     visit() {
         cy.visit('/departments');
-        cy.url().should('include', 'departments')
     }
+
     get newDepBtn() {
         return   cy.get('[data-cy=newDep]')
     }
@@ -13,6 +13,10 @@ class DepList {
 
     get deleteBtn(){
         return cy.get('[data-cy=deleteDep]')
+    }
+
+    get treeBtn(){
+        return cy.get('[data-cy=treeView]')
     }
     
 }

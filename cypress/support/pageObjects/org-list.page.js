@@ -1,7 +1,6 @@
 class OrgList {
     visit() {
-        cy.visit('/organisations');
-        cy.url().should('include', 'organisations')
+        cy.visit('/');
     }
     get newOrgBtn() {
         return   cy.get('[data-cy=newOrg]');
@@ -12,7 +11,7 @@ class OrgList {
     }
 
     get deleteBtn(){
-        cy.get('[data-cy=deleteOrg]');
+        return cy.get('[data-cy=deleteOrg]');
     }
     
 }

@@ -1,52 +1,61 @@
+import { orgList} from '../support/pageObjects/org-list.page'; 
+import { orgForm} from '../support/pageObjects/org-form.page'; 
+import { depList } from '../support/pageObjects/dep-list.page'; 
+import { depForm } from '../support/pageObjects/dep-form.page'; 
+import { depTree } from '../support/pageObjects/dep-tree.page'; 
+import { depDetail } from '../support/pageObjects/dep-detail.page'; 
+import { toast} from '../support/pageObjects/toast'; 
 
 
 describe('Organisation', function () {
 
     it('creates a new organisation', function () {
 
-        cy.visit('/')
+        orgList.visit()
 
-        cy.get('[data-cy=newOrg]').click()
+        orgList.newOrgBtn.click()
 
         cy.url().should('include', '/organisations/new')
 
-        cy.get('[data-cy=nameOrg]').type("Org n1")
+        orgForm.name.type("Org n1")
 
-        cy.get('[data-cy=descOrg]').type("Org n1 desc")
+        orgForm.description.type("Org n1 desc")
 
-        cy.get('[data-cy=rootName]').type("CEO of org n1")
+        orgForm.rootName.type("CEO of org n1")
 
-        cy.get('[data-cy=rootDesc]').type("CEO of org n1 desc")
+        orgForm.rootDescription.type("CEO of org n1 desc")
 
-        cy.get('[data-cy=submitOrg]').click()
+        orgForm.submitBtn.click()
 
-        cy.get(".toast-success")
-
+        toast.successToast
 
     })
 
 
     it('edit an organisation', function () {
 
-        cy.get('[data-cy=editOrg]').click()
+        // cy.get('[data-cy=editOrg]').click()
+        orgList.editBtn.click()
+
 
         cy.url().should('include', '/organisations')
             .and('include', '/edit')
 
-        cy.get("[data-cy=nameOrg]").should("have.value", "Org n1")
+        orgForm.name.should("have.value", "Org n1")
 
-        cy.get("[data-cy=descOrg]").should("have.value", "Org n1 desc")
+        orgForm.description.should("have.value", "Org n1 desc")
 
-        cy.get("[data-cy=rootName]").should("have.value", "CEO of org n1")
+        orgForm.rootName.should("have.value", "CEO of org n1")
 
-        cy.get("[data-cy=rootDesc]").should("have.value", "CEO of org n1 desc")
+        orgForm.rootDescription.should("have.value", "CEO of org n1 desc")
 
 
-        cy.get("[data-cy=nameOrg]").type("***")
+        orgForm.name.type("***")
 
-        cy.get('[data-cy=submitOrg]').click()
+        orgForm.submitBtn.click()
 
-        cy.get(".toast-info")
+        toast.infoToast
+
 
 
     })
@@ -54,9 +63,9 @@ describe('Organisation', function () {
 
     it('delete an organisation', function(){
 
-        cy.get('[data-cy=deleteOrg]').click()
+        orgList.deleteBtn.click()
 
-        cy.get(".toast-warning")
+        toast.warningToast
     })
 
 
@@ -66,22 +75,23 @@ describe('Organisation', function () {
 describe('Department', function () {
 
     before(function(){
-        
-        cy.visit('/')
 
-        cy.get('[data-cy=newOrg]').click()
+        orgList.visit()
+
+        orgList.newOrgBtn.click()
 
         cy.url().should('include', '/organisations/new')
 
-        cy.get("[data-cy=nameOrg]").type("Org n1")
+        orgForm.name.type("Org n1")
 
-        cy.get("[data-cy=descOrg]").type("Org n1 desc")
+        orgForm.description.type("Org n1 desc")
 
-        cy.get("[data-cy=rootName]").type("CEO of org n1")
+        orgForm.rootName.type("CEO of org n1")
 
-        cy.get("[data-cy=rootDesc]").type("CEO of org n1 desc")
+        orgForm.rootDescription.type("CEO of org n1 desc")
 
-        cy.get("[data-cy=submitOrg]").click()
+        orgForm.submitBtn.click()
+
 
     })
 
@@ -91,25 +101,24 @@ describe('Department', function () {
 
         cy.url().should('include', '/departments')
 
-        cy.get('[data-cy=newDep]').click()
+        depList.newDepBtn.click()
 
 
         cy.url().should('include', '/departments/new')
 
-        cy.get('[data-cy=nameDep]').type('dep1')
+        depForm.name.type('dep1')
 
-        cy.get('[data-cy=descDep]').type('dep1 desc')
+        depForm.description.type('dep1 desc')
 
         cy.get('.ant-select-arrow-icon').click()
 
         cy.contains('CEO of org n1').click()
 
-        cy.get('[data-cy=submitDep]').click()
+        depForm.submitBtn.click()
 
         cy.url().should('include', '/departments')
 
-        cy.get(".toast-success")
-
+        toast.successToast
 
     })
 
@@ -123,42 +132,42 @@ describe('Department', function () {
 
         // })
 
-        cy.get('tbody>tr').eq(1).get('[data-cy=editDep]').eq(1).click()
+        depList.editBtn.eq(1).click()
 
         cy.url().should('include', '/departments')
             .and('include', '/edit')
 
-        cy.get('[data-cy=nameDep]').type('***')
+        depForm.name.type('***')
 
         cy.get('.ant-select-arrow-icon').click()
 
         cy.contains('CEO of org n1').click()
 
-        cy.get('[data-cy=submitDep]').click()
+        depForm.submitBtn.click()
 
         cy.url().should('include', '/departments')
 
-        cy.get('.toast-info')
+        toast.infoToast
 
     })
 
 
     it('delete a department', function () {
 
-        cy.get('tbody>tr').eq(1).get('[data-cy=deleteDep]').eq(1).click()
+        depList.deleteBtn.eq(1).click()
 
 
-        cy.get('.toast-warning')
+        toast.warningToast
     })
 
 
     it('shows a tree view', function(){
 
-        cy.get('[data-cy=treeView]').click()
+        depList.treeBtn.click()
 
         cy.url().should('include', '/departments/tree')
 
-        cy.get('[data-cy=back]').click()
+        depTree.backBtn.click()
 
     })
 
@@ -172,7 +181,7 @@ describe('Department', function () {
 
         // check that the right content is sent
 
-        cy.get('[data-cy=back]').click()
+        depDetail.backBtn.click()
 
     })
 
@@ -188,7 +197,7 @@ describe('Department Edge Cases', function () {
 
         cy.newDepartment('dep2', 'dep2 desc', 'dep1')
 
-        cy.get('tbody>tr').eq(1).get('[data-cy=editDep]').eq(1).click()
+        depList.editBtn.eq(1).click()
 
         cy.url().should('include', '/departments')
             .and('include', '/edit')
@@ -199,7 +208,7 @@ describe('Department Edge Cases', function () {
 
         cy.contains('CEO of org n1').click()
 
-        cy.get('[data-cy=submitDep]').click()
+        depForm.submitBtn.click()
 
 
 
@@ -208,11 +217,11 @@ describe('Department Edge Cases', function () {
 
     it('deletes all children of a deleted department', function(){
 
-        cy.get('tbody>tr').eq(1).get('[data-cy=deleteDep]').eq(1).click()
+        depList.deleteBtn.eq(1).click()
 
-        cy.get('.toast-warning').contains('dep1')
+        toast.warningToast.contains('dep1')
 
-        cy.get('.toast-warning').contains('dep2')
+        toast.warningToast.contains('dep2')
 
         cy.get('tbody>tr').should('have.length', 1)
 
