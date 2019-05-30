@@ -21,6 +21,7 @@ steps:
     ng build --prod
     npm run cy:verify
     npm run ci:cy-run
+    npm install -g angular-cli-ghpages
     ng build --prod --base-href https://tunga12.github.io/Organisation/
     ngh --dir dist/Organisation
   displayName: 'npm install and build'
