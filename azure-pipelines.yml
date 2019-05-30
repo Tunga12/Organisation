@@ -22,3 +22,12 @@ steps:
     npm run cy:verify
     npm run ci:cy-run
   displayName: 'npm install and build'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '*.xml'
+    searchFolder: '$(System.DefaultWorkingDirectory)/tests'
+    mergeTestResults: true
+    failTaskOnFailedTests: true
+    testRunTitle: 'Cypress test results'
